@@ -9,6 +9,7 @@ import (
 	"strings"
 	"text/template"
 
+	"github.com/Masterminds/sprig/v3"
 	"github.com/plexsystems/konstraint/internal/rego"
 
 	log "github.com/sirupsen/logrus"
@@ -111,7 +112,7 @@ func runDocCommand(path string) error {
 		appliedTemplate = string(b)
 	}
 
-	t, err := template.New("docs").Parse(appliedTemplate)
+	t, err := template.New("docs").Funcs(sprig.FuncMap()).Parse(appliedTemplate)
 
 	if err != nil {
 		return fmt.Errorf("parsing template: %w", err)
